@@ -1,0 +1,76 @@
+// wtf_demo.api
+syntax = "v1"
+
+info(
+    title: "WTF Demo"
+    version: "1.0"
+)
+
+type (
+
+    GithubLoginReq {
+		Code string `json:"code"`
+	}
+
+	EthereumLoginReq {
+		Address   string `json:"address"`
+		Signature string `json:"signature"`
+		Message   string `json:"message"`
+	}
+
+	LoginResp {
+		Token string `json:"token"`
+	}
+
+    CreateArticleReq {
+        Title   string `json:"title"`
+        Content string `json:"content"`
+        Author  string `json:"author"`
+    }
+
+    CreateArticleResp {
+        ID int64 `json:"id"`
+    }
+
+    GetArticleReq {
+        ID int64 `json:"id"`
+    }
+
+    GetArticleResp {
+        ID      int64  `json:"id"`
+        Title   string `json:"title"`
+        Content string `json:"content"`
+        Author  string `json:"author"`
+    }
+
+    UpdateArticleReq {
+        ID      int64  `json:"id"`
+        Title   string `json:"title"`
+        Content string `json:"content"`
+    }
+
+    DeleteArticleReq {
+        ID int64 `json:"id"`
+    }
+)
+
+service wtfDemo {
+
+    @handler GithubLogin
+	post /login/github (GithubLoginReq) returns (LoginResp)
+
+	@handler EthereumLogin
+	post /login/ethereum (EthereumLoginReq) returns (LoginResp)
+    
+    @handler CreateArticle
+    post /article/create (CreateArticleReq) returns (CreateArticleResp)
+
+    @handler GetArticle
+    get /article/get (GetArticleReq) returns (GetArticleResp)
+
+    @handler UpdateArticle
+    post /article/update (UpdateArticleReq)
+
+    @handler DeleteArticle
+    post /article/delete (DeleteArticleReq)
+}
