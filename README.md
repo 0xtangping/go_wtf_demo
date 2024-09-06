@@ -1,6 +1,6 @@
 # 文章管理后端系统
 
-为了学习go做的一个防wtf.academy的后端系统，网址：https://shopify.xyz/(仅作于学习交流，随时关闭)，使用 [Go-Zero](https://github.com/zeromicro/go-zero) 框架开发的文章管理后端系统，支持文章的增删改查操作以及基于登录权限的用户认证管理。
+为了学习go做的一个山寨wtf.academy的系统，前端用vue2，网址：https://shopify.xyz/ (仅作于学习交流，随时关闭)， 后端使用 [Go-Zero](https://github.com/zeromicro/go-zero) 框架开发，支持文章的增删改查操作以及基于登录权限的用户认证管理。
 
 
 ## 功能特色
