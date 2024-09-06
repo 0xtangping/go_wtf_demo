@@ -1,0 +1,21 @@
+Name: wtf_demo-api
+Host: 0.0.0.0
+Port: 8080
+
+
+Database:
+  Driver: mysql
+  Source: root:QWEqwe123@tcp(1Panel-mysql-s1VY:3306)/wtf_demo?charset=utf8mb4&parseTime=true&loc=Local
+  #Source: root:QWEqwe123@tcp(127.0.0.1:3306)/wtf_demo?charset=utf8mb4&parseTime=true&loc=Local
+Ethereum:
+  ChainID: 1 # Mainnet
+  EthereumRPC: https://cloudflare-eth.com
+
+GithubOAuth:
+  ClientID: Ov23liYAFslQUsPGbfRr
+  ClientSecret: 5ffbb7b996a739741dd2d54e526283549d64758c
+  RedirectURL: https://shopify.xyz/login
+
+Auth:
+  AccessSecret: your_jwt_secret_key
+  AccessExpire: 7200  # 2 hours

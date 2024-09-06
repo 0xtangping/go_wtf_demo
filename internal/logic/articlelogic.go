@@ -56,6 +56,32 @@ func (l *ArticleLogic) GetArticle(req *types.GetArticleReq) (*types.GetArticleRe
         Title:   article.Title,
         Content: article.Content,
         Author:  article.Author,
+        CreatedAt: article.CreatedAt,
+        UpdatedAt: article.UpdatedAt,
+    }, nil
+}
+
+func (l *ArticleLogic) GetArticles(req *types.GetArticlesReq) (*types.GetArticlesResp, error) {
+    articles, err := l.svcCtx.ArticleModel.FindAll(l.ctx, req.Limit,req.Page)
+    if err != nil {
+        return nil, err
+    }
+
+        // 将 []*model.Article 转换为 []types.Article
+        var respArticles []types.Article
+        for _, article := range articles {
+            respArticles = append(respArticles, types.Article{
+                ID:        article.Id,
+                Title:     article.Title,
+                Content:   article.Content,
+                Author:    article.Author,
+                CreatedAt: article.CreatedAt,
+                UpdatedAt: article.UpdatedAt,
+            })
+        }
+
+    return &types.GetArticlesResp{
+        Articles:   respArticles,
     }, nil
 }
 

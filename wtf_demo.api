@@ -22,6 +22,15 @@ type (
 		Token string `json:"token"`
 	}
 
+    Article {
+        ID        int64     `json:"id"`        // 文章ID
+        Title     string    `json:"title"`     // 文章标题
+        Content   string    `json:"content"`   // 文章内容
+        Author    string    `json:"author"`    // 作者
+        CreatedAt time.Time `json:"created_at"` // 创建时间
+        UpdatedAt time.Time `json:"updated_at"` // 更新时间
+    }
+
     CreateArticleReq {
         Title   string `json:"title"`
         Content string `json:"content"`
@@ -32,15 +41,26 @@ type (
         ID int64 `json:"id"`
     }
 
+
     GetArticleReq {
-        ID int64 `json:"id"`
+        ID int64 `path:"id"`
     }
 
     GetArticleResp {
+        Article Article `json:"article"` // 文章详细信息
+    }
+
+    GetArticlesReq {
+        Limit   int64 `form:"limit"`
+        Page int64 `form:"page"`
+    }
+
+    GetArticlesResp {
         ID      int64  `json:"id"`
         Title   string `json:"title"`
         Content string `json:"content"`
         Author  string `json:"author"`
+        UpdatedAt 
     }
 
     UpdateArticleReq {
@@ -50,27 +70,30 @@ type (
     }
 
     DeleteArticleReq {
-        ID int64 `json:"id"`
+        ID int64 `path:"id"`
     }
 )
 
-service wtfDemo {
+service wtf_demo {
 
     @handler GithubLogin
-	post /login/github (GithubLoginReq) returns (LoginResp)
+	post /api/login/github (GithubLoginReq) returns (LoginResp)
 
 	@handler EthereumLogin
-	post /login/ethereum (EthereumLoginReq) returns (LoginResp)
+	post /api/login/ethereum (EthereumLoginReq) returns (LoginResp)
     
     @handler CreateArticle
-    post /article/create (CreateArticleReq) returns (CreateArticleResp)
+    post /api/articles/create (CreateArticleReq) returns (CreateArticleResp)
 
     @handler GetArticle
-    get /article/get (GetArticleReq) returns (GetArticleResp)
+    get /api/articles/:id (GetArticleReq) returns (GetArticleResp)
 
     @handler UpdateArticle
-    post /article/update (UpdateArticleReq)
+    put /api/articles/:id (UpdateArticleReq)
 
     @handler DeleteArticle
-    post /article/delete (DeleteArticleReq)
+    delete /api/articles/:id (DeleteArticleReq)
+
+    @handler GetArticles
+    get /api/articles (GetArticlesReq) returns (GetArticlesResp)
 }

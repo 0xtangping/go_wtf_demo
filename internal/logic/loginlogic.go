@@ -10,8 +10,8 @@ import (
 
 	"wtf_demo/internal/svc"
 
-	"github.com/dgrijalva/jwt-go"
 	"github.com/ethereum/go-ethereum/crypto"
+	"github.com/golang-jwt/jwt/v4"
 	"github.com/google/go-github/v33/github"
 	"github.com/zeromicro/go-zero/core/logx"
 	"golang.org/x/oauth2"
@@ -75,8 +75,15 @@ func (l *LoginLogic) generateToken(userId string) (string, error) {
 	claims["userId"] = userId
 	token := jwt.New(jwt.SigningMethodHS256)
 	token.Claims = claims
-	return token.SignedString([]byte(l.svcCtx.Config.Auth.AccessSecret))
+	// 签名并生成 token 字符串
+    signedToken, err := token.SignedString([]byte(l.svcCtx.Config.Auth.AccessSecret))
+    if err != nil {
+        return "", err
+    }
+
+    return signedToken, nil
 }
+
 
 func verifyEthereumSignature(address, signature, message string) bool {
 	// Remove '0x' prefix if present
@@ -84,9 +91,12 @@ func verifyEthereumSignature(address, signature, message string) bool {
 
 	// Decode the signature
 	sig, err := hex.DecodeString(signature)
-	if err != nil {
+	if err != nil || len(sig) != 65 {
 		return false
 	}
+
+	// Adjust the recovery id (v)
+	sig[64] -= 27
 
 	// Add Ethereum message prefix
 	prefixedMessage := fmt.Sprintf("\x19Ethereum Signed Message:\n%d%s", len(message), message)

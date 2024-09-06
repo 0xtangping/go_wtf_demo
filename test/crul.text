@@ -1,3 +1,25 @@
-curl -X POST http://127.0.0.1:8888/article/create \
+curl -X POST https://shopify.xyz/api/articles \
     -H "Content-Type: application/json" \
-    -d '{"title":"第一篇文章","author":"牛牛","content":"这是内容。"}'
+    -d '{"title":"第十篇文章","author":"牛牛","content":"这是内容。"}'
+
+curl -X PUT https://shopify.xyz/api/articles/1 \
+    -H "Content-Type: application/json" \
+    -d '{"title":"这是标题22","content":"这是内容2。"}'
+
+curl -X GET https://shopify.xyz/api/articles/1 \
+
+
+curl -X DELETE https://shopify.xyz/api/articles/2 
+
+curl -X GET https://shopify.xyz/api/articles?limit=10&page=1
+
+
+curl -X POST https://shopify.xyz/api/login/ethereum \
+    -H "Content-Type: application/json" \
+    -d '{"address":"0xf59b1B4009CA92a5bD7451A8844D14f442cEaEA2","signature":"0xfd4943420b1abec1966791f0bfbf193be418fce38d74be8dc65b91b53a636c176676db04a26034527d6d6173ffd85818b066196a680f79de70bb3fd7106c3d871b","message":"Login to our app"}'
+
+
+    curl -X POST https://shopify.xyz/api/login/github/code \
+    -H "Content-Type: application/json" \
+    -d '{"address":"0xf59b1B4009CA92a5bD7451A8844D14f442cEaEA2","signature":"0xfd4943420b1abec1966791f0bfbf193be418fce38d74be8dc65b91b53a636c176676db04a26034527d6d6173ffd85818b066196a680f79de70bb3fd7106c3d871b","message":"Login to our app"}'
+
